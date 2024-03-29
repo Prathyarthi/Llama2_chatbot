@@ -1,3 +1,4 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { InputBox } from "./components/InputBox"
 
 
@@ -5,7 +6,11 @@ function App() {
 
   return (
     <>
-      <InputBox/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<InputBox />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

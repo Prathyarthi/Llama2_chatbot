@@ -1,5 +1,6 @@
 import express from 'express'
 import ollama from 'ollama'
+import cors from 'cors'
 
 let modelResponse = ""
 
@@ -11,6 +12,9 @@ const chatConfig = ({
 
 const app = express()
 app.use(express.json())
+app.use(cors({
+    origin: 'http://localhost:5174'
+}))
 
 app.post('/ask', async (req, res) => {
     try {
@@ -34,7 +38,7 @@ app.post('/ask', async (req, res) => {
 
 async function invoke(question) {
     console.log(`-----`)
-    console.log(`[${chatConfig.model}]: ${chatConfig.content}`)
+    console.log(`[${chatConfig.model}]: ${question}`)
     console.log(`-----`)
     try {
         console.log(`Running prompt...`)
