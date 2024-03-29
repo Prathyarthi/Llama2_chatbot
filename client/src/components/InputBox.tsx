@@ -4,10 +4,13 @@ import { useState } from "react"
 export const InputBox = () => {
     const [prompt, setPrompt] = useState("")
     const [answer, setAnswer] = useState("Answer Here")
+    const [loading, setLoading] = useState(false)
     const handleSumbit = () => {
+        setLoading(true)
         axios.post("http://localhost:3000/ask", { question: prompt })
             .then((res) => {
                 setAnswer(res.data.response)
+                setLoading(false)
                 window.scrollTo({
                     top: document.body.scrollHeight,
                     behavior: 'smooth'
@@ -23,7 +26,7 @@ export const InputBox = () => {
                         <textarea value={prompt} onChange={(e) => {
                             setPrompt(e.target.value)
                         }} className="m-2 p-5 bg-slate-500 text-white place-content-center ring-offset-purple-900 w-96 h-32 rounded-3xl resize-none overflow-hidden" placeholder="Type your prompt here!" />
-                        <button onClick={handleSumbit} className="m-2 border rounded bg-blue-500 text-gray-100 p-2">Generate</button>
+                        <button onClick={handleSumbit} className="m-2 border rounded bg-blue-500 text-gray-100 p-2">{loading ? "Loading..." : "Generate"}</button>
                     </div>
                 </div>
             </div>
